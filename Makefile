@@ -1,5 +1,5 @@
 build:
-	go build -ldfalgs "-w -s" -o gohex main.go tui.go hex.go
+	go build -ldflags "-w -s" -o gohex main.go tui.go hex.go
 
 clean:
 	rm ./gohex
