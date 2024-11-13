@@ -11,6 +11,8 @@ type HexInfo struct {
 	AsciiRepresentation string
 }
 
+const BytesPerLine int = 16
+
 func getHexRepresentation(file []byte, start int, end int) string {
 	hexRepresentation := ""
 	for i := start; i < end; i++ {
@@ -43,8 +45,8 @@ func HexExtractor(filename string) ([]HexInfo, error) {
 	var hexInfo []HexInfo
 
 	fileLen := len(file)
-	for i := 0; i < fileLen; i += 16 {
-		end := i + 16
+	for i := 0; i < fileLen; i += BytesPerLine {
+		end := i + BytesPerLine
 		if end > fileLen {
 			end = fileLen
 		}
