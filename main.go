@@ -1,20 +1,22 @@
 package main
 
 import (
-	"log"
+	"gohex/utils"
 	"os"
 
 	tea "github.com/charmbracelet/bubbletea"
 )
 
 func main() {
+	logger := utils.NewLogger()
+
 	hexInfoArr, err := HexExtractor(os.Args[1])
 	if err != nil {
-		log.Fatalln(err)
+		logger.Fatalln(err)
 	}
 
 	m := model{Render(hexInfoArr)}
 	if _, err = tea.NewProgram(m).Run(); err != nil {
-		log.Fatalln("Error running program:", err)
+		logger.Fatalln("Error running program:", err)
 	}
 }

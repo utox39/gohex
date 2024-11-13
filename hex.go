@@ -53,11 +53,6 @@ func HexExtractor(filename string) ([]HexInfo, error) {
 
 		hexRepresentation := getHexRepresentation(file, i, end)
 
-		// Add extra spaces
-		for j := end; j < i+16; j++ {
-			hexRepresentation += "  "
-		}
-
 		asciiRepresentation := getAsciiRepresentation(file, i, end)
 
 		hexInfo = append(hexInfo, HexInfo{
