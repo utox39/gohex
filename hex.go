@@ -13,8 +13,8 @@ type HexInfo struct {
 
 func getHexRepresentation(file []byte, start int, end int) string {
 	hexRepresentation := ""
-	for j := start; j < end; j++ {
-		hexRepresentation += fmt.Sprintf("%02X ", file[j])
+	for i := start; i < end; i++ {
+		hexRepresentation += fmt.Sprintf("%02X ", file[i])
 	}
 
 	return hexRepresentation
@@ -22,9 +22,9 @@ func getHexRepresentation(file []byte, start int, end int) string {
 
 func getAsciiRepresentation(file []byte, start int, end int) string {
 	asciiRepresentation := " |"
-	for j := start; j < end; j++ {
-		if file[j] >= 32 && file[j] <= 126 {
-			asciiRepresentation += fmt.Sprintf("%c", file[j])
+	for i := start; i < end; i++ {
+		if file[i] >= 32 && file[i] <= 126 {
+			asciiRepresentation += fmt.Sprintf("%c", file[i])
 		} else {
 			asciiRepresentation += "."
 		}
