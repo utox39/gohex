@@ -1,22 +1,53 @@
 package main
 
 import (
-	"gohex/utils"
+	"fmt"
 	"os"
 
+	"gohex/utils"
+
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/urfave/cli/v2"
 )
 
 func main() {
 	logger := utils.NewLogger()
 
-	hexInfoArr, err := HexExtractor(os.Args[1])
-	if err != nil {
-		logger.Fatalln(err)
+	app := &cli.App{
+		Name:  "GoHex",
+		Usage: "Hex editor and disassembler",
+		Commands: []*cli.Command{
+			{
+				Name:  "hex",
+				Usage: "View the hex representation of the binary file",
+				Action: func(c *cli.Context) error {
+					hexInfoArr, err := HexExtractor(c.Args().Get(0))
+					if err != nil {
+						return fmt.Errorf("error extracting hex info: %v", err)
+					}
+
+					m := model{Render(hexInfoArr)}
+					if _, err = tea.NewProgram(m).Run(); err != nil {
+						return fmt.Errorf("error running program: %v", err)
+					}
+
+					return nil
+				},
+			},
+			{
+				Name:  "disassemble",
+				Usage: "Disassemble a binary file",
+				Action: func(c *cli.Context) error {
+					fmt.Println(Disassemble(c.Args().Get(0)))
+					return nil
+				},
+			},
+		},
+		Action:  nil,
+		Version: "0.1.0",
 	}
 
-	m := model{Render(hexInfoArr)}
-	if _, err = tea.NewProgram(m).Run(); err != nil {
-		logger.Fatalln("Error running program:", err)
+	if err := app.Run(os.Args); err != nil {
+		logger.Fatalln(err)
 	}
 }
