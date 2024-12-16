@@ -1,25 +1,27 @@
 package main
 
 /*
-#cgo LDFLAGS: -lcapstone -lelf disassembler.o
+#cgo LDFLAGS: -L. -lgohexdisassembler -lcapstone -lLIEF
+
 #include <stdlib.h>
-#include "disassembler/disassembler.h"
+#include  "disassembler/disassembler_wrapper.h"
 */
 import "C"
 
-import "unsafe"
+import (
+	"fmt"
+	"unsafe"
+)
 
-func Disassemble(filename string) string {
+func Disassemble(filename string) error {
 	cFilename := C.CString(filename)
 	defer C.free(unsafe.Pointer(cFilename))
 
-	var cOutput *C.char
+	exitStatus := C.disassembler_wrapper(cFilename)
 
-	C.disassemble(cFilename, &cOutput)
+	if exitStatus != 0 {
+		return fmt.Errorf("disassembler error")
+	}
 
-	goOutput := C.GoString(cOutput)
-
-	C.free(unsafe.Pointer(cOutput))
-
-	return goOutput
+	return nil
 }
