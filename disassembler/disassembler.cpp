@@ -102,11 +102,11 @@ file_arch_t get_file_arch(const std::unique_ptr<LIEF::Binary> &binary)
     return file_arch;
 }
 
-void disassemble_code(const std::vector<uint8_t> &code, uint64_t address, file_arch_t file_arch)
+int disassemble_code(const std::vector<uint8_t> &code, uint64_t address, file_arch_t file_arch)
 {
     if (file_arch.arch == CS_ARCH_ALL && file_arch.mode == CS_MODE_LITTLE_ENDIAN)
     {
-        return;
+        return (EXIT_FAILURE);
     }
 
     csh handle;
@@ -116,7 +116,7 @@ void disassemble_code(const std::vector<uint8_t> &code, uint64_t address, file_a
     if (cs_open(file_arch.arch, file_arch.mode, &handle) != CS_ERR_OK)
     {
         std::cerr << "Capstone initialization error." << std::endl;
-        return;
+        return (EXIT_FAILURE);
     }
 
     // Perform disassembly
@@ -133,6 +133,8 @@ void disassemble_code(const std::vector<uint8_t> &code, uint64_t address, file_a
     else
     {
         std::cerr << "Disassembly error." << std::endl;
+        cs_close(&handle); // Close Capstone engine
+        return (EXIT_FAILURE);
     }
 
     cs_close(&handle); // Close Capstone engine
@@ -149,13 +151,13 @@ int disassembler(const std::string &filename)
     catch (const std::exception &e)
     {
         std::cerr << "Error while parsing the file: " << e.what() << std::endl;
-        exit(EXIT_FAILURE);
+        return (EXIT_FAILURE);
     }
 
     if (!binary)
     {
         std::cerr << "Unable to analyze the file" << std::endl;
-        exit(EXIT_FAILURE);
+        return (EXIT_FAILURE);
     }
 
     std::cout << "File format detected: " << LIEF::to_string(binary->format()) << std::endl;
@@ -174,7 +176,7 @@ int disassembler(const std::string &filename)
     if (!text_section)
     {
         std::cerr << ".text section not found in the file." << std::endl;
-        exit(EXIT_FAILURE);
+        return (EXIT_FAILURE);
     }
 
     // Retrieve the machine code from the .text section
@@ -191,7 +193,7 @@ int disassembler(const std::string &filename)
     std::cout << "'.text' section found: Size = " << code.size() << ", Address = 0x" << std::hex << code_address << std::endl;
 
     // Disassemble the code
-    disassemble_code(code, code_address, file_arch);
+    int exit_status = disassemble_code(code, code_address, file_arch);
 
-    return 0;
+    return exit_status;
 }
