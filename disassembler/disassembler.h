@@ -2,6 +2,8 @@
 #ifndef DISASSEMBLER_H
 #define DISASSEMBLER_H
 
-void disassemble(const char* filename, char** output);
+#include <string>
 
-#endif
+int disassembler(const std::string &filename);
+
+#endif // DISASSEMBLER_H
