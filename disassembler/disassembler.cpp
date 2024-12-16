@@ -138,6 +138,7 @@ int disassemble_code(const std::vector<uint8_t> &code, uint64_t address, file_ar
     }
 
     cs_close(&handle); // Close Capstone engine
+    return 0;
 }
 
 int disassembler(const std::string &filename)
