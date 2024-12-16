@@ -38,7 +38,11 @@ func main() {
 				Name:  "disassemble",
 				Usage: "Disassemble a binary file",
 				Action: func(c *cli.Context) error {
-					fmt.Println(Disassemble(c.Args().Get(0)))
+					err := Disassemble(c.Args().Get(0))
+					if err != nil {
+						return err
+					}
+
 					return nil
 				},
 			},
