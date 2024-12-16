@@ -1,7 +1,7 @@
 package main
 
 /*
-#cgo LDFLAGS: -L. -lgohexdisassembler -lcapstone -lLIEF
+#cgo LDFLAGS: -L./build -lgohexdisassembler -lcapstone -lLIEF
 
 #include <stdlib.h>
 #include  "disassembler/disassembler_wrapper.h"
