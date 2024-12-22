@@ -58,7 +58,7 @@ file_arch_t get_file_arch(const std::unique_ptr<LIEF::Binary> &binary)
             case LIEF::PE::Header::MACHINE_TYPES::AMD64:
                 file_arch.arch_name = "x86_64";
                 file_arch.arch = CS_ARCH_X86;
-                file_arch.mode - CS_MODE_64;
+                file_arch.mode = CS_MODE_64;
                 break;
             case LIEF::PE::Header::MACHINE_TYPES::I386:
                 file_arch.arch_name = "I386";
