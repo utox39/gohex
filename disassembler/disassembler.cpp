@@ -29,7 +29,7 @@ file_arch_t get_file_arch(const std::unique_ptr<LIEF::Binary> &binary)
             case LIEF::ELF::ARCH::AARCH64:
                 file_arch.arch_name = "AARCH64";
                 file_arch.arch = CS_ARCH_ARM64;
-                file_arch.mode - CS_MODE_ARM;
+                file_arch.mode = CS_MODE_ARM;
                 break;
             case LIEF::ELF::ARCH::X86_64:
                 file_arch.arch_name = "x86_64";
