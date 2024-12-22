@@ -167,7 +167,7 @@ int disassembler(const std::string &filename)
     const LIEF::Section *text_section = nullptr;
     for (const LIEF::Section &section : binary->sections())
     {
-        if (section.name() == ".text")
+        if (section.name() == ".text" || section.name() == "__text")
         {
             text_section = &section;
             break;
@@ -176,7 +176,7 @@ int disassembler(const std::string &filename)
 
     if (!text_section)
     {
-        std::cerr << ".text section not found in the file." << std::endl;
+        std::cerr << ".text/__text section not found in the file." << std::endl;
         return (EXIT_FAILURE);
     }
 
