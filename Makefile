@@ -21,4 +21,4 @@ install:
 	sudo cp ./build/$(GO_BIN) $(BIN_DIR)
 
 clean:
-	rm -f $(GO_BIN) $(LIB_NAME)
+	rm -f ./build/$(GO_BIN) ./build/$(LIB_NAME)
