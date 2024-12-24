@@ -23,6 +23,24 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch msg.String() {
 		case "q", "ctrl+c", "esc":
 			return m, tea.Quit
+
+		case "shift+up":
+			m.table.MoveUp(10)
+
+		case "shift+down":
+			m.table.MoveDown(10)
+
+		case "alt+up":
+			m.table.MoveUp(100)
+
+		case "alt+down":
+			m.table.MoveDown(100)
+
+		case "shift+left":
+			m.table.MoveUp(1000)
+
+		case "shift+right":
+			m.table.MoveDown(1000)
 		}
 	}
 	m.table, cmd = m.table.Update(msg)
