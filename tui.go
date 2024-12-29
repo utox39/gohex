@@ -79,7 +79,7 @@ func Render(hexInfo []HexInfo) table.Model {
 		table.WithColumns(columns),
 		table.WithRows(rows),
 		table.WithFocused(true),
-		table.WithHeight(30),
+		table.WithHeight(11),
 	)
 
 	s := table.DefaultStyles()
