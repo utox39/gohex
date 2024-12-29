@@ -1,6 +1,8 @@
 package main
 
 import (
+	"strings"
+
 	"github.com/charmbracelet/bubbles/table"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
@@ -48,7 +50,15 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() string {
-	return baseStyle.Render(m.table.View()) + "\n"
+	body := strings.Builder{}
+
+	body.WriteString("GoHex\n- shift+up/down: scroll 10 lines, ")
+	body.WriteString("alt+up/down: scroll 100 lines\n")
+	body.WriteString("- shift+left/right: scroll 1000 lines\n\n")
+
+	body.WriteString(m.table.View())
+
+	return baseStyle.Render(body.String()) + "\n"
 }
 
 func Render(hexInfo []HexInfo) table.Model {
