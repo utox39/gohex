@@ -5,6 +5,8 @@
 
 ## Description
 
+Hex editor and disassembler
+
 ## Requirements
 
 - [Capstone](https://www.capstone-engine.org/)
