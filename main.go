@@ -19,7 +19,7 @@ func main() {
 		Commands: []*cli.Command{
 			{
 				Name:  "hex",
-				Usage: "View the hexdump of the binary file",
+				Usage: "View the hexdump of a binary file",
 				Action: func(c *cli.Context) error {
 					hexInfoArr, err := HexExtractor(c.Args().Get(0))
 					if err != nil {
