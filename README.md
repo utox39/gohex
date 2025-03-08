@@ -16,7 +16,7 @@ Hex editor and disassembler
 
 ```bash
 # Clone the repo
-$ git clone url/to/gohex
+$ git clone https://github.com/utox39/gohex.git
 
 # cd to the path
 $ cd path/to/gohex
